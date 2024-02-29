@@ -61,5 +61,6 @@ public class VeriBankasi {
         hastaIDleri.add(444);
         hastaIDleri.add(555);
         hastaIDleri.add(666);
+
     }
 }
