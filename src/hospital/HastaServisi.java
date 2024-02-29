@@ -1,5 +1,7 @@
 package hospital;
 
+import java.io.IOException;
+
 import static hospital.HastaneRunner.slowPrint;
 import static hospital.HastaneRunner.start;
 import static hospital.HastaneServisi.scan;
@@ -7,7 +9,7 @@ import static hospital.Islemler.*;
 
 public class HastaServisi {
 
-    public static void menu() throws InterruptedException {
+    public static void menu() throws InterruptedException, IOException {
 
         int secim = -1;
         do {

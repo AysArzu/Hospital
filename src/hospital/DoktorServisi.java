@@ -1,16 +1,16 @@
 package hospital;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static hospital.HastaneRunner.slowPrint;
 import static hospital.HastaneRunner.start;
 import static hospital.HastaneServisi.scan;
-import static hospital.Islemler.doktorBul;
-import static hospital.Islemler.doktorlariListele;
+import static hospital.Islemler.*;
 
 public class DoktorServisi {
 
-    public static void menu() throws InterruptedException {
+    public static void menu() throws InterruptedException, IOException {
 
         int secim = -1;
         do {
@@ -21,13 +21,13 @@ public class DoktorServisi {
             try {
                 secim = scan.nextInt();
             } catch (Exception e) {
-                scan.nextLine();
+                scan.nextLine();//dummy
                 System.out.println("\"LUTFEN SIZE SUNULAN SECENEKLERIN DISINDA VERI GIRISI YAPMAYINIZ!\"");
                 continue;
             }
             switch (secim) {
                 case 1:
-                    //add();
+                   // ekle();
                     break;
                 case 2:
                     doktorlariListele();

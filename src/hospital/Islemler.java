@@ -1,26 +1,34 @@
 package hospital;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static hospital.HastaneRunner.start;
+
 public class Islemler {
     private static Hastane hastane = new Hastane();
 
     public static String doktorUnvan(String aktuelDurum) {
         String unvan = "Yanlis Unvan";
-        for (int i = 0; i < hastane.durumlar.length; i++) {
-            if (aktuelDurum.equalsIgnoreCase(hastane.durumlar[i])) {
-                unvan = hastane.unvanlar[i];
 
-            }
+        for (int i = 0; i < VeriBankasi.durumlar.size(); i++) {
+                     if (aktuelDurum.equalsIgnoreCase(VeriBankasi.durumlar.get(i))) {
+                 unvan = VeriBankasi.unvanlar.get(i);
+
         }
-        return unvan;
-    }
+            }
+            return unvan;
+          }
 
-    public static Doktor doktorBul(String unvan) {
+   public static Doktor doktorBul(String unvan) {
         Doktor doktor = new Doktor();
-        for (int i = 0; i < hastane.doctorIsimleri.length; i++) {
-            if (unvan.equalsIgnoreCase(hastane.unvanlar[i])) {
-                doktor.setIsim(hastane.doctorIsimleri[i]);
-                doktor.setSoyisim(hastane.doctorSoyIsimleri[i]);
-                doktor.setUnvan(hastane.unvanlar[i]);
+
+        for (int i = 0; i < VeriBankasi.doctorIsimleri.size(); i++) {
+            if (unvan.equalsIgnoreCase(VeriBankasi.unvanlar.get(i))) {
+                doktor.setIsim(VeriBankasi.doctorIsimleri.get(i));
+                doktor.setSoyisim(VeriBankasi.doctorSoyIsimleri.get(i));
+                doktor.setUnvan(VeriBankasi.unvanlar.get(i));
 
 
             }
@@ -30,71 +38,82 @@ public class Islemler {
         return doktor;
     }
 
-    public static Durum hastaDurumuBul(String aktuelDurum) {
-        Durum hastaDurumu = new Durum("Yanlis Durum", false);
+        public static Durum hastaDurumuBul (String aktuelDurum){
+            Durum hastaDurumu = new Durum("Yanlis Durum", false);
 
-        switch (aktuelDurum.toLowerCase()) {
-            case "allerji":
-            case "bas agrisi":
-            case "diabet":
-            case "soguk alginligi":
-                hastaDurumu.setAciliyet(false);
-                hastaDurumu.setAktuelDurum(aktuelDurum);
-                break;
-            case "migren":
-            case "kalp hastaliklari":
-                hastaDurumu.setAciliyet(true);
-                hastaDurumu.setAktuelDurum(aktuelDurum);
+            switch (aktuelDurum.toLowerCase()) {
+                case "allerji":
+                case "bas agrisi":
+                case "diabet":
+                case "soguk alginligi":
+                    hastaDurumu.setAciliyet(false);
+                    hastaDurumu.setAktuelDurum(aktuelDurum);
+                    break;
+                case "migren":
+                case "kalp hastaliklari":
+                    hastaDurumu.setAciliyet(true);
+                    hastaDurumu.setAktuelDurum(aktuelDurum);
 
-                break;
-            default:
-                System.out.println("Gecerli bir durum degil");
+                    break;
+                default:
+                    System.out.println("Gecerli bir durum degil");
 
+            }
+
+                 return hastaDurumu;
         }
-
-        return hastaDurumu;
-    }
 
     public static Hasta hastaBul(String aktuelDurum) {
         Hasta hasta = new Hasta();
-        for (int i = 0; i < hastane.hastaIsimleri.length; i++) {
-            if (aktuelDurum.equalsIgnoreCase(hastane.durumlar[i])) {
+        for (int i = 0; i < VeriBankasi.hastaIsimleri.size(); i++) {
+            if (aktuelDurum.equalsIgnoreCase(VeriBankasi.durumlar.get(i))) {
 
-                hasta.setIsim(hastane.hastaIsimleri[i]);
-                hasta.setSoyisim(hastane.hastaSoyIsimleri[i]);
-                hasta.setHastaID(hastane.hastaIDleri[i]);
+                hasta.setIsim(hastane.hastaIsimleri.get(i));
+                hasta.setSoyisim(hastane.hastaSoyIsimleri.get(i));
+                hasta.setHastaID(hastane.hastaIDleri.get(i));
                 hasta.setHastaDurumu(hastaDurumuBul(aktuelDurum));
 
             }
-        }
-        System.out.println(hasta);
+           }
+            System.out.println(hasta);
 
-        return hasta;
+            return hasta;
+           }
+
+        public static void doktorlariListele () {
+            System.out.println("------------------------------------------------------");
+            System.out.println("---------- HASTANEDE BULUNAN DOKTORLARIMIZ -----------");
+            System.out.printf("%-13s | %-15s | %-15s\n", "DOKTOR İSİM", "DOKTOR SOYİSİM", "DOKTOR UNVAN");
+            System.out.println("------------------------------------------------------");
+            for (int i = 0; i < hastane.doctorIsimleri.size(); i++) {
+                //      System.out.printf("%-13s | %-15s | %-15s\n", hastane.doctorIsimleri[i], hastane.doctorSoyIsimleri[i], hastane.unvanlar[i]);
+            }
+            System.out.println("------------------------------------------------------");
+        }
+
+        public static void hastalariListele () {
+            System.out.println("---------------------------------------------------------------------------");
+            System.out.println("----------------------- HASTANEDE BULUNAN HASTALARIMIZ --------------------");
+            System.out.printf("%-10s | %-10s | %-15s | %-20s\n", "HASTA ID", "HASTA ISIM", "HASTA SOYISIM", "HASTA DURUM");
+            System.out.println("---------------------------------------------------------------------------");
+
+            for (int i = 0; i < hastane.hastaIsimleri.size(); i++) {
+                 System.out.printf("%-10s | %-10s | %-15s | %-20s\n", hastane.hastaIDleri.get(i),hastane.hastaIsimleri.get(i),
+                         hastane.hastaSoyIsimleri.get(i), hastane.durumlar.get(i));
+
+            }
+            System.out.println("---------------------------------------------------------------------------");
+    }    public static void iletisim() throws IOException, InterruptedException {
+        Files.lines(Paths.get("src/hospital/Yonetim.txt")).forEach(System.out::println);
+
+        start();
+
     }
 
-    public static void doktorlariListele() {
-        System.out.println("------------------------------------------------------");
-        System.out.println("---------- HASTANEDE BULUNAN DOKTORLARIMIZ -----------");
-        System.out.printf("%-13s | %-15s | %-15s\n", "DOKTOR İSİM", "DOKTOR SOYİSİM", "DOKTOR UNVAN");
-        System.out.println("------------------------------------------------------");
-        for (int i = 0; i < hastane.doctorIsimleri.length; i++) {
-            System.out.printf("%-13s | %-15s | %-15s\n", hastane.doctorIsimleri[i], hastane.doctorSoyIsimleri[i], hastane.unvanlar[i]);
-        }
-        System.out.println("------------------------------------------------------");
+
+    public static void cikis() {
+        System.out.println("Hastanemizi tercih ettiğiniz için teşekkürler. \n\t"+"*".repeat(10)+" SAĞLICAKLA KALIN "+"*".repeat(10));
+
     }
-
-    public static void hastalariListele() {
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.println("----------------------- HASTANEDE BULUNAN HASTALARIMIZ --------------------");
-        System.out.printf("%-10s | %-10s | %-15s | %-20s\n", "HASTA ID", "HASTA ISIM", "HASTA SOYISIM", "HASTA DURUM");
-        System.out.println("---------------------------------------------------------------------------");
-
-        for (int i = 0; i < hastane.hastaIsimleri.length; i++) {
-            System.out.printf("%-10s | %-10s | %-15s | %-20s\n", hastane.hastaIDleri[i],hastane.hastaIsimleri[i],hastane.hastaSoyIsimleri[i], hastane.durumlar[i]);
-
         }
-        System.out.println("---------------------------------------------------------------------------");
-    }
 
-
-}
