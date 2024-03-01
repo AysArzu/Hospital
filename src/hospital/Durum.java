@@ -31,7 +31,7 @@ public class Durum {
     @Override
     public String toString() {
         return "Durum{" +
-                "aktuelDurum='" + aktuelDurum + '\'' +
+                "Hasta Durumu:'" + aktuelDurum + '\'' +
                 ", aciliyet=" + aciliyet +
                 '}';
     }
